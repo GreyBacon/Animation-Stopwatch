@@ -17,6 +17,7 @@ def step_counter():
     #Runs checkpointing if the timer is already running
     if not flag_running: 
         time_start = time.perf_counter()
+            
     
     #Tracks and outputs timer
     time_total = time.perf_counter() - time_start
@@ -33,9 +34,6 @@ def reset():
     flag_running = False
     time_start = 0
     time_total = 0
-    output.config(state=NORMAL)
-    output.delete(1.0,END)
-    output.config(state=DISABLED)
     btn_start.config(text="Start")
 
 """
@@ -56,6 +54,10 @@ def start_timer(event=None):
             if flag_running:
                 output.config(state=NORMAL)
                 output.insert(END, "%.2f"%(time_total) + " seconds, %.2f"%(frames) + " frames\n")
+                output.config(state=DISABLED)
+            else:
+                output.config(state=NORMAL)
+                output.delete(1.0,END)
                 output.config(state=DISABLED)
             flag_pause = False
             step_counter()
